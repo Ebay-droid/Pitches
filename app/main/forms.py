@@ -9,4 +9,4 @@ class PitchForm(FlaskForm):
     submit = SubmitField('Submit')
     
     
-class Useer(db.Model):    
+      
