@@ -1,11 +1,12 @@
 from . import db
 from datetime import datetime
 
-class Pitches(db.Model):
+class Pitch(db.Model):
 
     __tablename__ = 'pitches'
     
     id = db.Column(db.Integer,primary_key = True)
+    category = db.Column(db.Integer)
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
     pitch = db.Column(db.String)
@@ -16,7 +17,8 @@ class Pitches(db.Model):
       
     @classmethod
     def get_pitches(cls):
-      pitches=Pitch.query.filter_by()
+      pitches=Pitch.query.filter_by(category).all()
+      return pitches
     
 
 
