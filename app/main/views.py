@@ -4,7 +4,7 @@ from . import main
 from .forms import PitchForm
 import markdown2
 
-@main.route('/pitches/category',methods = ['GET','POST'])
+@main.route('/pitch/new/category',methods = ['GET','POST'])
 def new_pitch(category):
   form = PitchForm()
   
@@ -17,6 +17,15 @@ def new_pitch(category):
     
     #save_pitch
     new_pitch.save_pitch()
+    
+    
+@main.route('/pitch/category')
+def single_pitch(id):
+    pitch=Pitch.query.get(id)
+    if pitch is None:
+        abort(404)
+    format_pitch = markdown2.markdown(pitch.pitch,extras=["code-friendly", "fenced-code-blocks"])
+    return render_template('pitch.html',pitch = pitch,format_pitch=format_pitch)    
     
     
     

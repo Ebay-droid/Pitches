@@ -16,7 +16,7 @@ class Pitch(db.Model):
       db.session.commit()
       
     @classmethod
-    def get_pitches(cls):
+    def get_pitches(cls,category):
       pitches=Pitch.query.filter_by(category).all()
       return pitches
     
