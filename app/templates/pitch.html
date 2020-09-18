@@ -1,16 +1,13 @@
-{%extends 'base.html'%}
-{% import "bootstrap/wtf.html" as wtf%}
+{% extends 'base.html'%}
 
-{% block content %}
-    <div class="container">
+{% block content%}
+<div class="container-fluid">
 
-        
-        <div class="col-md-4">
+  
 
-            {{ wtf.quick_form(review_form) }}
-            {{simplemde.load}}
-        </div>
-
+    <div class="col-sm-8">
+      {{format_pitch|safe}}
     </div>
-
-{% endblock %}
+ 
+</div>
+{%endblock%}
