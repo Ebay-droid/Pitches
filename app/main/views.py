@@ -3,8 +3,12 @@ from flask import render_template
 from . import main
 from .forms import PitchForm
 import markdown2
+from flask_login import login_required
+from app.models import Pitch
+
 
 @main.route('/pitch/new/category',methods = ['GET','POST'])
+@login_required
 def new_pitch(category):
   form = PitchForm()
   
