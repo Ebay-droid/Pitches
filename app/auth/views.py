@@ -9,7 +9,7 @@ from .. import db
 @auth.route('/login',methods=['GET','POST'])
 def login():
   login_form = LoginForm()
-    if login_form.validate_on_submit():
+  if login_form.validate_on_submit():
         user = User.query.filter_by(email = login_form.email.data).first()
         if user is not None and user.verify_password(login_form.password.data):
             login_user(user,login_form.remember.data)
@@ -17,9 +17,9 @@ def login():
 
         flash('Invalid username or Password')
 
-    title = "pitches login"
-    return render_template('auth/login.html',login_form = login_form,title=title)
-  
+  title = "pitches login"
+  return render_template('auth/login.html',login_form = login_form,title=title)
+
   
 @auth.route('/register',methods = ["GET","POST"])
 def register():
