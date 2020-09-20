@@ -1,16 +1,31 @@
 {%extends 'base.html'%}
 {% import "bootstrap/wtf.html" as wtf%}
+{% import 'macros.html' as macro%}
 
 {% block content %}
     <div class="container">
 
-        
-        <div class="col-md-4">
+      <div class="row">
+                <div class="col-md-6">
 
-            {{ wtf.quick_form(pitch_form) }}
-            {{simplemde.load}}
-        </div>
+                    {{ wtf.quick_form(pitch_form) }}
+                    {{simplemde.load}}
+                </div>
 
+                <div class="col-md-6">
+
+                    <h1>Pitches Added</h1>
+                    <hr>
+            
+                    {% if pitches %}
+                        {{macro.displayPitch(pitches)}}
+            
+                
+                    {% endif %}
+            
+                </div>
+
+      </div>    
     </div>
 
 {% endblock %}
