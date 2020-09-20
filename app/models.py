@@ -13,7 +13,7 @@ class Pitch(db.Model):
     __tablename__ = 'pitches'
     
     id = db.Column(db.Integer,primary_key = True)
-    category = db.Column(db.Integer)
+    category = db.Column(db.String)
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
     pitch = db.Column(db.String)

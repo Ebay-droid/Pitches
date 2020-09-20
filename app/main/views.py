@@ -20,17 +20,17 @@ def new_pitch():
   form = PitchForm()
   
   if form.validate_on_submit():
-    title =form.title.data
+    category =form.category.data
     pitch =form.pitch.data
     
     #pitch instance
-    new_pitch =  Pitch(pitch=pitch,user =current_user)
+    new_pitch =  Pitch(pitch=pitch,user =current_user,category=category)
     
     #save_pitch
     new_pitch.save_pitch()
-    return redirect(url_for('.pitch'))
+    return redirect(url_for('.new_pitch'))
 
-  return render_template('new_pitch.html', pitch_form=form)  
+  return render_template('new_pitch.html',category=category, pitch_form=form)  
     
     
 # @main.route('/pitch/<category>')
