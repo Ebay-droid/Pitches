@@ -30,16 +30,16 @@ def new_pitch():
     new_pitch.save_pitch()
     return redirect(url_for('.new_pitch'))
 
-  return render_template('new_pitch.html',category=category, pitch_form=form)  
+  return render_template('new_pitch.html', pitch_form=form)  
     
     
-# @main.route('/pitch/<category>')
-# def single_pitch(category):
-#     pitch=Pitch.query.get(category)
-#     if pitch is None:
-#         abort(404)
-#     format_pitch = markdown2.markdown(pitch.pitch,extras=["code-friendly", "fenced-code-blocks"])
-#     return render_template('pitch.html',pitch = pitch,format_pitch=format_pitch) 
+@main.route('/pitches/<category>')
+def single_pitch(category):
+    pitch=Pitch.query.get(category)
+    if pitch is None:
+        abort(404)
+    format_pitch = markdown2.markdown(pitch.pitch,extras=["code-friendly", "fenced-code-blocks"])
+    return render_template('pitch.html',pitch = pitch,format_pitch=format_pitch) 
   
 @main.route('/user/<uname>')
 def profile(uname):
