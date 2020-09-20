@@ -14,9 +14,9 @@ def index():
   return render_template('index.html')
 
 
-@main.route('/category/new/pitch',methods = ['GET','POST'])
+@main.route('/pitches/new_pitch',methods = ['GET','POST'])
 @login_required
-def new_pitch(category):
+def new_pitch():
   form = PitchForm()
   
   if form.validate_on_submit():
@@ -24,23 +24,22 @@ def new_pitch(category):
     pitch =form.pitch.data
     
     #pitch instance
-    new_pitch =  Pitch(category= category,pitch=pitch,user =current_user)
+    new_pitch =  Pitch(pitch=pitch,user =current_user)
     
     #save_pitch
     new_pitch.save_pitch()
-    return redirect(url_for('.pitch',pitch =pitch.category))
+    return redirect(url_for('.pitch'))
 
-  title = f'{pitch.title} review'
-  return render_template('new_pitch.html',title = title, pitch_form=form, movie=movie)  
+  return render_template('new_pitch.html', pitch_form=form)  
     
     
-@main.route('/pitch/<category>')
-def single_pitch(category):
-    pitch=Pitch.query.get(category)
-    if pitch is None:
-        abort(404)
-    format_pitch = markdown2.markdown(pitch.pitch,extras=["code-friendly", "fenced-code-blocks"])
-    return render_template('pitch.html',pitch = pitch,format_pitch=format_pitch) 
+# @main.route('/pitch/<category>')
+# def single_pitch(category):
+#     pitch=Pitch.query.get(category)
+#     if pitch is None:
+#         abort(404)
+#     format_pitch = markdown2.markdown(pitch.pitch,extras=["code-friendly", "fenced-code-blocks"])
+#     return render_template('pitch.html',pitch = pitch,format_pitch=format_pitch) 
   
 @main.route('/user/<uname>')
 def profile(uname):

@@ -7,7 +7,7 @@
     <div class="navbar-nav">
       <a class="nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
       <a class="nav-link" href="#">Pitches</a>
-      <a class="nav-link" href="new_pitch.html">Write a pitch</a>
+      <a class="nav-link" href="/pitches/new_pitch">Write a pitch</a>
       {% if current_user.is_authenticated%}
       <a class="nav-link" href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a>
       <a class="nav-link" href="{{url_for('auth.logout')}}">Sign Out</a>
