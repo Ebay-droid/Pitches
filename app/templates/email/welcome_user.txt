@@ -1,0 +1,3 @@
+Whatsup {{user.username}}
+Welcome to Pitches
+We have just seen you have signed up for our application and want to welcome you to the family. Write pitches and also feel free to review and comment on current pitches.
