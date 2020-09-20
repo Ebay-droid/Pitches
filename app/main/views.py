@@ -3,18 +3,18 @@ from flask import render_template,request,redirect,url_for,abort
 from . import main
 from .forms import PitchForm,UpdateProfile
 import markdown2
-from flask_login import login_required
+from flask_login import login_required,current_user
 from  ..models import Pitch,User
 from .. import db,photos
 
 
-@main.route('/index')
+@main.route('/')
 def index():
   
   return render_template('index.html')
 
 
-@main.route('/pitch/new/category',methods = ['GET','POST'])
+@main.route('/category/new/pitch',methods = ['GET','POST'])
 @login_required
 def new_pitch(category):
   form = PitchForm()
@@ -24,15 +24,19 @@ def new_pitch(category):
     pitch =form.pitch.data
     
     #pitch instance
-    new_pitch =  Pitch(category= category,pitch=pitch,)
+    new_pitch =  Pitch(category= category,pitch=pitch,user =current_user)
     
     #save_pitch
     new_pitch.save_pitch()
+    return redirect(url_for('.pitch',pitch =pitch.category))
+
+  title = f'{pitch.title} review'
+  return render_template('new_pitch.html',title = title, pitch_form=form, movie=movie)  
     
     
-@main.route('/pitch/category')
-def single_pitch(id):
-    pitch=Pitch.query.get(id)
+@main.route('/pitch/<category>')
+def single_pitch(category):
+    pitch=Pitch.query.get(category)
     if pitch is None:
         abort(404)
     format_pitch = markdown2.markdown(pitch.pitch,extras=["code-friendly", "fenced-code-blocks"])

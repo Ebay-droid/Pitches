@@ -1,5 +1,5 @@
 <!-- Displaying reviews macro -->
-{% macro displayReviews(review_list) %}
+{% macro displayPitch(pitch_list) %}
 
     {% for pitch in pitch_list %}
 
@@ -10,7 +10,7 @@
         <p>{{pitch.user.username}}</p>
       </div>
       <div class="col-xs-10 col-sm-10 col-md-8 col-lg-8">
-        <h2> <a href="{{url_for('main.single_review',id=review.id)}}">{{review.movie_title}}</a> </h2>
+        <h2> <a href="{{url_for('main.single_pitch',category=pitch.category)}}">{{review.movie_title}}</a> </h2>
       </div>
     </div>
 

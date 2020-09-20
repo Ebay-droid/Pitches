@@ -30,6 +30,8 @@ class Pitch(db.Model):
     
 class User(UserMixin,db.Model):  
       __tablename__ = 'users'
+      
+      pitches = db.relationship('Review',backref = 'user',lazy = "dynamic")
 
       id = db.Column(db.Integer,primary_key = True)
       username = db.Column(db.String(255))
