@@ -3,33 +3,43 @@
 {% import 'macros.html' as macro%}
 
 {% block content%}
-<div class="container-fluid">
-  
-    <!-- <div class="col-sm-8">
-      {{format_pitch|safe}}
-    </div> -->
+{%for pitch in pitches%}
 
-    <div class="row">
+<div class="row  row-cols-md-3">
+  <div class="col mb-3">
+    <!-- Card -->
+    <div class="card">
 
-      <h1>Pitches</h1>
-      <hr>
+      <!--Card image-->
+      <div class="view overlay">
+        <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg"
+          alt="Card image cap">
+        <a href="#!">
+          <div class="mask rgba-white-slight"></div>
+        </a>
+      </div>
 
-      {% if pitch %}
-          {{macro.displayPitch(pitches)}}
+      <!--Card content-->
+      <div class="card-body">
 
-      {% else%}
-          <h3 class="text-center">This movie has no reviews </h3>
+        <!--Title-->
+        {%if user == current_user%}
+        <h5>Name: {{user.username}}</h5>
+        {%endif%}
+        <h4 class="card-title">Category: {{pitch.category}}</h4>
+        <!--Text-->
+        <p class="card-text"> Pitch: {{pitch.pitch}}</p>
+        <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+        <a href="{{url_for('main.new_comment', pitch_id =pitch.id)}}"> <button type="button" class="btn btn-light-blue btn-md">Comment</button></button></a> 
+        <a href=""><i class="fab fa-gratipay fa-2x"></i></a>
+        <i class="fas fa-heart-broken fa-2x"></i>
+      </div>
 
-          <a class="btn btn-success btn-lg text-center" href="/movie/review/new/{{movie.id}}"> Write a new review</a>
-      {% endif %}
-
+    </div>
+    <!-- Card -->
   </div>
-
-  
-
-  
-
-    
- 
 </div>
+{%endfor%}
+
+  
 {%endblock%}

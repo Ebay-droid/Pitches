@@ -1,10 +1,10 @@
 
 from flask import render_template,request,redirect,url_for,abort
 from . import main
-from .forms import PitchForm,UpdateProfile
+from .forms import PitchForm,UpdateProfile,CommentForm
 import markdown2
 from flask_login import login_required,current_user
-from  ..models import Pitch,User
+from  ..models import Pitch,User,Comment,Like
 from .. import db,photos
 
 
@@ -18,10 +18,12 @@ def index():
 @login_required
 def new_pitch():
   form = PitchForm()
+#   pitches = Pitch.query.filter_by(user_id).all()
   
   if form.validate_on_submit():
     category =form.category.data
     pitch =form.pitch.data
+    user_id=user_id
     
     #pitch instance
     new_pitch =  Pitch(pitch=pitch,user =current_user,category=category)
@@ -31,16 +33,53 @@ def new_pitch():
     return redirect(url_for('.new_pitch'))
 
     
-  return render_template('new_pitch.html', pitch_form=form)  
+  return render_template('new_pitch.html', pitch_form=form )  
+
+@main.route('/pitches/comment/<int:pitch_id>',methods = ['GET','POST'])
+@login_required
+def new_comment(pitch_id):
+    form = CommentForm()
+    comments = Comment.query.filter_by(pitch_id=pitch_id).all()
+    pitches = Pitch.query.get(pitch_id)
     
+    if form.validate_on_submit():
+        comment = form.comment.data
+        pitch_id = pitch_id
+        new_comment = Comment(comment = comment, pitch_id=pitch_id)
+        
+        
+        new_comment.save_comment()
+        return redirect(url_for('.index',form =form,pitch_id =pitch_id))
     
-@main.route('/pitches/<category>')
-def single_pitch(category):
-    pitch=Pitch.query.get(category)
-    if pitch is None:
-        abort(404)
-    format_pitch = markdown2.markdown(pitch.pitch,extras=["code-friendly", "fenced-code-blocks"])
-    return render_template('pitch.html',pitch = pitch,format_pitch=format_pitch) 
+    return render_template('comments.html', comment_form =form, comments = comments, pitch_id =pitch_id)
+
+
+# def get_likes(pitch_id):
+#     pitches= Pitch.query.get(pitch_id)
+#     if pitches.count() == 0:
+#         abort(404)
+        
+        
+  
+    
+# @main.route('/pitches/<category>')
+# def single_pitch(category):
+#     pitch=Pitch.query.get(category)
+#     if pitch is None:
+#         abort(404)
+#     format_pitch = markdown2.markdown(pitch.pitch,extras=["code-friendly", "fenced-code-blocks"])
+#     return render_template('pitch.html',pitch = pitch,format_pitch=format_pitch) 
+@main.route('/pitches')
+def get_pitches():
+    user = User.query.filter_by(username = 'uname').first()
+    pitches = Pitch.query.all()
+    user = current_user
+    
+    return render_template ('pitch.html',pitches = pitches, user = user)
+
+
+
+
   
 @main.route('/user/<uname>')
 def profile(uname):

@@ -13,16 +13,18 @@ class Pitch(db.Model):
     __tablename__ = 'pitches'
     
     id = db.Column(db.Integer,primary_key = True)
-    category = db.Column(db.String, index =True)
+    category = db.Column(db.String, index = True)
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
     pitch = db.Column(db.String)
-    
+    comments = db.relationship('Comment',backref = 'pitch',lazy = "dynamic")
    
     
     def save_pitch(self):
       db.session.add(self)
       db.session.commit()
+      
+      
       
       
     def __repr__(self):
@@ -34,11 +36,10 @@ class User(UserMixin,db.Model):
       __tablename__ = 'users'
       
       pitches = db.relationship('Pitch',backref = 'user',lazy = "dynamic")
-
+      comments = db.relationship('Comment',backref = 'user',lazy = "dynamic")  
       id = db.Column(db.Integer,primary_key = True)
       username = db.Column(db.String(255))
       email = db.Column(db.String(255),unique = True,index = True)
-      role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
       bio = db.Column(db.String(255))
       profile_pic_path = db.Column(db.String())
       pass_secure = db.Column(db.String(255))
@@ -60,15 +61,7 @@ class User(UserMixin,db.Model):
           return f'User {self.username}'
         
         
-class Role(db.Model):
-    __tablename__ = 'roles'
-
-    id = db.Column(db.Integer,primary_key = True)
-    name = db.Column(db.String(255))
-    users = db.relationship('User',backref = 'role',lazy="dynamic")
-
-    def __repr__(self):
-        return f'User {self.name}'      
+     
     
   
 class Comment(db.Model):
@@ -78,7 +71,6 @@ class Comment(db.Model):
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
     comment = db.Column(db.String)     
-    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
     pitch_id = db.Column(db.Integer,db.ForeignKey("pitches.id"))
     
 
@@ -95,6 +87,21 @@ class Comment(db.Model):
     
     def __repr__(self):
         return f'comment:{self.comment}' 
+    
+    
+class Like(db.Model):
+    __tablename__ = 'likes'
+    
+    id =db.Column(db.Integer, primary_key = True)
+    pitch_id = db.Column(db.Integer,db.ForeignKey("pitches.id")) 
+    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))  
+
+    def save_like(self):
+        db.session.add(self)
+        db.session.commit()
+        
+    def __repr__(self):
+        return f'comment:{self.comment}'     
 
 
 
