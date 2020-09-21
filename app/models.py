@@ -18,7 +18,7 @@ class Pitch(db.Model):
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
     pitch = db.Column(db.String)
     comments = db.relationship('Comment',backref = 'pitch',lazy = "dynamic")
-   
+    # category_id=db.Column(db.Integer,db.ForeignKey("category.id"))
     
     def save_pitch(self):
       db.session.add(self)
@@ -101,7 +101,43 @@ class Like(db.Model):
         db.session.commit()
         
     def __repr__(self):
-        return f'comment:{self.comment}'     
+        return f'{self.user_id}:{self.pitch_id}'     
+    
+class Dislike(db.Model):
+    __tablename__ ='dislikes'
+    
+    id =db.Column(db.Integer, primary_key = True)
+    pitch_id = db.Column(db.Integer,db.ForeignKey("pitches.id")) 
+    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))  
+    
+    def save_dislike(self):
+        db.session.add(self)
+        db.session.commit()
+        
+    def __repr__(self):
+        return f'{self.user_id}:{self.pitch_id}'    
+        
+    
+    
+    
+# class Category(db.Model):
+#     __tablename__= 'categories'
+    
+#     id = db.Column(db.Integer,primary_key=True)
+#     user_id = db.Column(db.Integer,db.ForeignKey("users.id")) 
+#     pitch = db.relationship('Pitch',backref = 'category',lazy = "dynamic")
+    
+    
+#     def save_category(self):
+#         db.session.add(self)
+#         db.session.commit()
+        
+        
+#     def __repr__(self):
+#         return f'Category: {self.category}'    
+ 
+
+        
 
 
 

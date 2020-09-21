@@ -40,7 +40,7 @@ def new_pitch():
 def new_comment(pitch_id):
     form = CommentForm()
     comments = Comment.query.filter_by(pitch_id=pitch_id).all()
-    pitches = Pitch.query.get(pitch_id)
+    # pitches = Pitch.query.get(pitch_id)
     
     if form.validate_on_submit():
         comment = form.comment.data
