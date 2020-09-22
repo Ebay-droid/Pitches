@@ -1,23 +1,15 @@
 {% extends 'base.html'%}
-
-{% import 'macros.html' as macro%}
-
-{% block content%}
-{%for pitch in pitches%}
-
+{%for pitch in pick_up%}
 <div class="row ">
   <div class="col-md-6 mb-3">
     <!-- Card -->
     <div class="card">
 
-
+    
       <!--Card content-->
       <div class="card-body">
-
-        <!--Title-->
-        
         <h5>Name: {{pitch.author.username}}</h5>
-       
+
         <h6 class="card-title">Category: {{pitch.category}}</h6>
         <!--Text-->
         <p class="card-text"> Pitch: {{pitch.pitch}}</p>
@@ -31,7 +23,3 @@
     <!-- Card -->
   </div>
 </div>
-{%endfor%}
-
-  
-{%endblock%}

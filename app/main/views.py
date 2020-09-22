@@ -39,7 +39,7 @@ def new_pitch():
 @login_required
 def new_comment(pitch_id):
     form = CommentForm()
-    comments = Comment.query.filter_by(pitch_id=pitch_id).all()
+    comments = Comment.get_comments(pitch_id)
     # pitches = Pitch.query.get(pitch_id)
     
     if form.validate_on_submit():
@@ -71,10 +71,6 @@ def get_pitches():
     
     return render_template ('pitch.html',pitches = pitches, user = user)
 
-
-
-
-  
 @main.route('/user/<uname>')
 def profile(uname):
     user = User.query.filter_by(username = uname).first()
@@ -115,8 +111,52 @@ def update_pic(uname):
     return redirect(url_for('main.profile',uname=uname))
 
 
-@main.route('/counter')
+# @main.route('/pitches/int:<pitch_id>/likes')
+# @login_required
+# def Upvote(pitch_id):
+#     pitch_likes= Like.get_likes(pitch_id)
+#     all_likes = int(pitch_likes)+ 1
+    
+#     new_like = Like()
+    
+@main.route('/pitches/Band') 
 @login_required
-def Upvote():
-    like = 0
-    like += 1
+def band_pitches():
+    all_pitches = Pitch.query.all() 
+    band =  Pitch.query.filter_by(category = 'Band').all()
+    
+    
+    return render_template('band.html', band = band)
+
+
+@main.route('/pitches/Business') 
+@login_required
+def business_pitches():
+    all_pitches = Pitch.query.all() 
+    business =  Pitch.query.filter_by(category = 'Business').all()
+    
+    
+    return render_template('business.html', business = business)
+
+@main.route('/pitches/Job') 
+@login_required
+def job_pitches():
+    all_pitches = Pitch.query.all() 
+    job =  Pitch.query.filter_by(category = 'Job').all()
+    
+    
+    return render_template('job.html', job = job)
+
+@main.route('/pitches/Pick-up') 
+@login_required
+def Pickup_pitches():
+    all_pitches = Pitch.query.all() 
+    pick_up =  Pitch.query.filter_by(category = 'Pick-up').all()
+    
+    
+    return render_template('pickup.html', pick_up=pick_up)
+    
+      
+    
+    
+    

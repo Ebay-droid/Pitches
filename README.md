@@ -19,4 +19,7 @@ Name: Ebenezer Gakuo
 Github:
 email:
 
-## Licence
+## Licence :
+MIT License: https://raw.githubusercontent.com/Ebay-droid/Pitches/master/LICENSE
+
+Copyright (c) 2020 Ebenezer Gakuo

@@ -35,8 +35,8 @@ class Pitch(db.Model):
 class User(UserMixin,db.Model):  
       __tablename__ = 'users'
       
-      pitches = db.relationship('Pitch',backref = 'user',lazy = "dynamic")
-      comments = db.relationship('Comment',backref = 'user',lazy = "dynamic")  
+      pitches = db.relationship('Pitch',backref = 'author',lazy = "dynamic")
+      comments = db.relationship('Comment',backref = 'author',lazy = "dynamic")  
       id = db.Column(db.Integer,primary_key = True)
       username = db.Column(db.String(255))
       email = db.Column(db.String(255),unique = True,index = True)
@@ -95,10 +95,15 @@ class Like(db.Model):
     id =db.Column(db.Integer, primary_key = True)
     pitch_id = db.Column(db.Integer,db.ForeignKey("pitches.id")) 
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))  
+    Like = db.Column(db.Integer)
 
     def save_like(self):
         db.session.add(self)
         db.session.commit()
+        
+    @classmethod
+    def get_likes(cls,pitch_id):
+        likes = Like.query.filter_by(pitch_id=pitch_id).all()    
         
     def __repr__(self):
         return f'{self.user_id}:{self.pitch_id}'     
@@ -108,11 +113,17 @@ class Dislike(db.Model):
     
     id =db.Column(db.Integer, primary_key = True)
     pitch_id = db.Column(db.Integer,db.ForeignKey("pitches.id")) 
-    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))  
+    user_id = db.Column(db.Integer,db.ForeignKey("users.id")) 
+    dislike = db.Column(db.Integer)
+     
     
     def save_dislike(self):
         db.session.add(self)
         db.session.commit()
+        
+    @classmethod
+    def get_dislikes(cls,pitch_id):
+        dislikes = Dislike.query.filter_by(pitch_id=pitch_id).all()    
         
     def __repr__(self):
         return f'{self.user_id}:{self.pitch_id}'    
