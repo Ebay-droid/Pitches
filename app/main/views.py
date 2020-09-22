@@ -23,7 +23,7 @@ def new_pitch():
   if form.validate_on_submit():
     category =form.category.data
     pitch =form.pitch.data
-    user_id=user_id
+    # user_id= user_id
     
     #pitch instance
     new_pitch =  Pitch(pitch=pitch,user =current_user,category=category)
@@ -54,21 +54,15 @@ def new_comment(pitch_id):
     return render_template('comments.html', comment_form =form, comments = comments, pitch_id =pitch_id)
 
 
-# def get_likes(pitch_id):
-#     pitches= Pitch.query.get(pitch_id)
-#     if pitches.count() == 0:
-#         abort(404)
-        
-        
-  
+# @main.route('/user/my_pitches')
+# def my_pitches(user_id):
+#     user = User.query.filter_by(username = 'uname').first()
+#     pitches = Pitch.query.filter_by(user_id).all()
+#     user = current_user
     
-# @main.route('/pitches/<category>')
-# def single_pitch(category):
-#     pitch=Pitch.query.get(category)
-#     if pitch is None:
-#         abort(404)
-#     format_pitch = markdown2.markdown(pitch.pitch,extras=["code-friendly", "fenced-code-blocks"])
-#     return render_template('pitch.html',pitch = pitch,format_pitch=format_pitch) 
+#     return render_template ('profile.html',pitches = pitches, user = user)
+
+
 @main.route('/pitches')
 def get_pitches():
     user = User.query.filter_by(username = 'uname').first()
@@ -119,3 +113,10 @@ def update_pic(uname):
         user.profile_pic_path = path
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
+
+
+@main.route('/counter')
+@login_required
+def Upvote():
+    like = 0
+    like += 1
