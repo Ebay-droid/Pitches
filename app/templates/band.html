@@ -1,11 +1,12 @@
 {% extends 'base.html'%}
+{%block content%}
 {%for pitch in band%}
 <div class="row ">
   <div class="col-md-6 mb-3">
     <!-- Card -->
     <div class="card">
 
-      <!--Card content-->
+            <!--Card content-->
       <div class="card-body">
 
         <!--Title-->
@@ -25,3 +26,4 @@
   </div>
 </div>
 {%endfor%}
+{%endblock%}

@@ -1,4 +1,5 @@
 {% extends 'base.html'%}
+{%block content%}
 {%for pitch in job%}
 <div class="row ">
   <div class="col-md-6 mb-3">
@@ -23,3 +24,5 @@
     <!-- Card -->
   </div>
 </div>
+{%endfor%}
+{%endblock%}

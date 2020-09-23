@@ -18,15 +18,13 @@ def index():
 @login_required
 def new_pitch():
   form = PitchForm()
-#   pitches = Pitch.query.filter_by(user_id).all()
   
   if form.validate_on_submit():
     category =form.category.data
     pitch =form.pitch.data
-    # user_id= user_id
     
     #pitch instance
-    new_pitch =  Pitch(pitch=pitch,user =current_user,category=category)
+    new_pitch =  Pitch(pitch=pitch,category=category)
     
     #save_pitch
     new_pitch.save_pitch()
@@ -40,7 +38,6 @@ def new_pitch():
 def new_comment(pitch_id):
     form = CommentForm()
     comments = Comment.get_comments(pitch_id)
-    # pitches = Pitch.query.get(pitch_id)
     
     if form.validate_on_submit():
         comment = form.comment.data
@@ -74,11 +71,13 @@ def get_pitches():
 @main.route('/user/<uname>')
 def profile(uname):
     user = User.query.filter_by(username = uname).first()
+    user_id =current_user.id
+    my_pitches = Pitch.query.filter_by(user_id = user_id).all()
 
     if user is None:
         abort(404)
 
-    return render_template("profile/profile.html", user = user)     
+    return render_template("profile/profile.html", user = user, my_pitches = my_pitches)     
     
 @main.route('/user/<uname>/update',methods = ['GET','POST'])
 @login_required
