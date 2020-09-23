@@ -1,7 +1,7 @@
 export SECRET_KEY='just a key'
 export MAIL_USERNAME='gakuoebenezer@gmail.com'
 export MAIL_PASSWORD='@ebay6100'
-export DATABASE_URL='postgres://mchlghwbefupph:8fa7d0e303ce75c79fc329633e1f8e4fcc31bba69440d8bd3e0c0ceea6448630@ec2-3-214-46-194.compute-1.amazonaws.com:5432/dsie8fs5d66k5'
+export DATABASE_URL="postgres://xzxzdyjmnlzgih:1a1b6959abd5a5199d255c7729f0d030bfafe72f6a711cfee0c2ce206f626bbb@ec2-54-152-40-168.compute-1.amazonaws.com:5432/dfncuualnl3no3"
 
 
 
